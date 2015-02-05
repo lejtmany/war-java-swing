@@ -4,10 +4,10 @@ package com.lejtman;
 
 
 public class Card {
-    public final Value value;
+    public final Rank value;
     public final Suit suit;
     
-    public Card(Suit suit, Value value){
+    public Card(Suit suit, Rank value){
         this.suit = suit;
         this.value = value;
     }

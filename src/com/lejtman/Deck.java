@@ -3,57 +3,90 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.lejtman;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
  * @author student1
  */
-public class Deck{
-    
+public class Deck {
+
     private final LinkedList<Card> deck;
-   
-    public Deck(){
+
+    public Deck() {
         deck = fillDeck();
-        this.shuffle();       
+        this.shuffle();
     }
-    
-    public Deck(List<Card> cards){
+
+    public Deck(List<Card> cards) {
         deck = new LinkedList<>(cards);
     }
 
     private LinkedList<Card> fillDeck() {
-        LinkedList<Card> cards = new LinkedList<>(); 
-        for(Suit suit: Suit.values())
-            for(Value value : Value.values())
-                cards.add(new Card(suit,value));
+        LinkedList<Card> cards = new LinkedList<>();
+        for (Suit suit : Suit.values()) {
+            for (Rank value : Rank.values()) {
+                cards.add(new Card(suit, value));
+            }
+        }
         return cards;
     }
 
     public void shuffle() {
         Collections.shuffle(deck);
     }
-    
-    public Card draw(){
+
+    public Card draw() {
         return deck.pop();
     }
-    
-    public void putCardOnBottom(Card card){
+
+    public void putCardOnBottom(Card card) {
         deck.addFirst(card);
     }
-    
-    public void putCardOnTop(Card card){
+
+    public void putCardOnTop(Card card) {
         deck.addLast(card);
     }
-    
-    public void putCardInPositon(int position, Card card){
+
+    public void putCardInPositon(int position, Card card) {
         deck.add(position, card);
     }
-    
-    
+
+    public static <T> void shuffle(T[] array) {
+        List<T> list = Arrays.<T>asList(array);
+        List<T> shuffledList = shuffleList(list);
+        copyListToArray(array, shuffledList);
+    }
+
+    private static <T> List<T> shuffleList(List<T> list) {
+        List<T> shuffledList = new ArrayList<>();
+        Random gen = new Random();
+        while (list.size() != 0) {
+            T element = takeOutRandomElement(list, gen);
+            shuffledList.add(element);
+        }
+        return shuffledList;
+    }
+
+    private static <T> T takeOutRandomElement(List<T> list, Random gen) {
+        return list.remove(getRandomIndex(list.size(), gen));
+    }
+
+    private static int getRandomIndex(int size, Random gen) {
+        return gen.nextInt() % (size - 1);
+    }
+
+    private static <T> void copyListToArray(T[] array, List<T> list) {
+        for (int i = 0; i < array.length; i++) {
+            array[i] = list.remove(0);
+        }
+    }
+
 }
