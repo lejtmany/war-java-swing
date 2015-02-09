@@ -60,7 +60,7 @@ public class Deck {
     }
 
     public static <T> void shuffle(T[] array) {
-        List<T> list = Arrays.<T>asList(array);
+        List<T> list = new ArrayList(Arrays.<T>asList(array));
         List<T> shuffledList = shuffleList(list);
         copyListToArray(array, shuffledList);
     }
@@ -79,8 +79,8 @@ public class Deck {
         return list.remove(getRandomIndex(list.size(), gen));
     }
 
-    private static int getRandomIndex(int size, Random gen) {
-        return gen.nextInt() % (size - 1);
+    public static int getRandomIndex(int size, Random gen) {
+        return Math.abs(gen.nextInt() % size);
     }
 
     private static <T> void copyListToArray(T[] array, List<T> list) {
