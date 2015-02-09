@@ -4,11 +4,24 @@ package com.lejtman;
 
 
 public class Card {
-    public final Rank value;
-    public final Suit suit;
+
+    enum Suit{Hearts,Spades,Diamonds,Clubs};
+    
+    private final Rank rank;
+    private final Suit suit;
     
     public Card(Suit suit, Rank value){
         this.suit = suit;
-        this.value = value;
+        this.rank = value;
     }
+    
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+    
+    
 }

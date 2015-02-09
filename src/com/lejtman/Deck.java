@@ -5,6 +5,7 @@
  */
 package com.lejtman;
 
+import com.lejtman.Card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,22 +22,11 @@ public class Deck {
     private final LinkedList<Card> deck;
 
     public Deck() {
-        deck = fillDeck();
-        this.shuffle();
+        deck = new LinkedList<>();
     }
 
     public Deck(List<Card> cards) {
         deck = new LinkedList<>(cards);
-    }
-
-    private LinkedList<Card> fillDeck() {
-        LinkedList<Card> cards = new LinkedList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank value : Rank.values()) {
-                cards.add(new Card(suit, value));
-            }
-        }
-        return cards;
     }
 
     public void shuffle() {
@@ -59,6 +49,20 @@ public class Deck {
         deck.add(position, card);
     }
 
+   public static Deck getFullDeck(){
+       return new Deck(fillDeck());
+   }
+   
+   private static LinkedList<Card> fillDeck() {
+        LinkedList<Card> cards = new LinkedList<>();
+        for (Suit suit : Suit.values()) {
+            for (Rank value : Rank.values()) {
+                cards.add(new Card(suit, value));
+            }
+        }
+        return cards;
+    }
+    
     public static <T> void shuffle(T[] array) {
         List<T> list = new ArrayList(Arrays.<T>asList(array));
         List<T> shuffledList = shuffleList(list);
