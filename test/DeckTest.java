@@ -1,9 +1,6 @@
 // yosef shalom lejtman
 import com.lejtman.Deck;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -47,30 +44,19 @@ public class DeckTest {
         for (int i = 0; i < testIterations; i++) {
             shuffleArray = numbers;
             Deck.shuffle(shuffleArray);
-            for (int j = 0; j < prevShuffle.length; j++) {
-                if (prevShuffle[j].equals(shuffleArray[j])) 
-                    sameCounter++;               
-            }
+            sameCounter = CountSamePositions(prevShuffle, shuffleArray, sameCounter);
             prevShuffle = Arrays.copyOf(shuffleArray, prevShuffle.length);
         }
 
         assertTrue((sameCounter / testIterations) <= 1);
     }
 
-    @Test
-    public void testGetRandomIndex() {
-        int size = 15;
-        boolean valid = true;
-        Random gen = new Random();
-        List<Integer> randomIndexes = new ArrayList();
-        for (int i = 0; i < 1000; i++) {
-            randomIndexes.add(Deck.getRandomIndex(15, gen));
+    private int CountSamePositions(Integer[] prevShuffle, Integer[] shuffleArray, int sameCounter) {
+        for (int j = 0; j < prevShuffle.length; j++) {
+            if (prevShuffle[j].equals(shuffleArray[j]))
+                sameCounter++;
         }
-        for (int i : randomIndexes) {
-            if (i < 0 || i > size - 1) {
-                valid = false;
-            }
-        }
-        assertTrue(valid);
+        return sameCounter;
     }
+
 }

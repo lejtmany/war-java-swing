@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//yosef shalom lejtman
 package com.lejtman;
 
 import com.lejtman.Card.Suit;
@@ -83,7 +79,7 @@ public class Deck {
         return list.remove(getRandomIndex(list.size(), gen));
     }
 
-    public static int getRandomIndex(int size, Random gen) {
+    private static int getRandomIndex(int size, Random gen) {
         return Math.abs(gen.nextInt() % size);
     }
 
