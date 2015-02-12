@@ -34,7 +34,7 @@ public class DeckTest {
     }
 
     @Test
-    public void testShuffleList() {
+    public void testShuffleArray() {
         Integer[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         Integer[] prevShuffle = numbers;
         Integer[] shuffleArray = null;
@@ -58,5 +58,10 @@ public class DeckTest {
         }
         return sameCounter;
     }
-
+    
+    @Test 
+    public void testShuffleList(){
+        
+    }
+            
 }

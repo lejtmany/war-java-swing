@@ -3,7 +3,9 @@
 package com.lejtman;
 
 
-public class Card {
+public class Card implements Comparable<Card>{
+
+    
 
     enum Suit{Hearts,Spades,Diamonds,Clubs};
     
@@ -23,5 +25,12 @@ public class Card {
         return suit;
     }
     
+    @Override
+    public int compareTo(Card that) {
+        int cmp = this.rank.getValue() - that.rank.getValue();
+        if(cmp != 0)
+            return cmp;
+        return this.suit.compareTo(that.suit);
+    }
     
 }
