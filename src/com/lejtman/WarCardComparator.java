@@ -11,17 +11,12 @@ public class WarCardComparator implements Comparator<Card>{
 
     @Override
     public int compare(Card card1, Card card2) {
-        if(getCardValue(card1) < getCardValue(card2))
-            return -1;
-        else if(getCardValue(card1) > getCardValue(card2))
-            return 1;
-        else return 0;
-        
+        return getCardValue(card1) - getCardValue(card2);
     }
 
     private int getCardValue(Card card) {
         if(card.getRank() == Rank.ACE)
-            return Integer.MAX_VALUE;
+            return 100;
         else
             return card.getRank().getValue();
     }

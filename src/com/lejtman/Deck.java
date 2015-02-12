@@ -4,6 +4,7 @@ package com.lejtman;
 import com.lejtman.Card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,11 @@ import java.util.Random;
  */
 public class Deck {
 
+    static Random gen;
+
+    static {
+        gen = new Random();
+    }
     private final LinkedList<Card> deck;
 
     public Deck() {
@@ -45,11 +51,37 @@ public class Deck {
         deck.add(position, card);
     }
 
-   public static Deck getFullDeck(){
-       return new Deck(fillDeck());
-   }
-   
-   private static LinkedList<Card> fillDeck() {
+    public int size() {
+        return deck.size();
+    }
+
+    public void addCards(Collection<Card> cards) {
+        deck.addAll(cards);
+    }
+
+    public Deck[] splitDeck(int amtOfDecks) {
+        Deck[] deckArray = new Deck[amtOfDecks];
+        int baseAmount = deck.size() / amtOfDecks;
+        int remainingCards = deck.size() % amtOfDecks;
+        int index = 0;
+        int lastIndex = 0;
+        for (int i = 0; i < amtOfDecks; i++) {
+            lastIndex = index;
+            index = i * baseAmount;
+            if(remainingCards > 0)
+                index++;
+            remainingCards--;
+            deckArray[i] = new Deck();
+            deckArray[i].addCards(deck.subList(lastIndex , index));          
+        }
+        return deckArray;
+    }
+
+    public static Deck getFullDeck() {
+        return new Deck(fillDeck());
+    }
+
+    private static LinkedList<Card> fillDeck() {
         LinkedList<Card> cards = new LinkedList<>();
         for (Suit suit : Suit.values()) {
             for (Rank value : Rank.values()) {
@@ -58,28 +90,34 @@ public class Deck {
         }
         return cards;
     }
-    
+
     public static <T> void shuffle(T[] array) {
         List<T> list = new ArrayList(Arrays.<T>asList(array));
         List<T> shuffledList = shuffleList(list);
         copyListToArray(array, shuffledList);
     }
 
-    private static <T> List<T> shuffleList(List<T> list) {
+    public static <T> void shuffle(List<T> list) {
+        List<T> shuffledList = shuffleList(list);
+        list.clear();
+        list.addAll(shuffledList);
+    }
+
+    public static <T> List<T> shuffleList(List<T> list) {
         List<T> shuffledList = new ArrayList<>();
         Random gen = new Random();
         while (list.size() != 0) {
-            T element = takeOutRandomElement(list, gen);
+            T element = takeOutRandomElement(list);
             shuffledList.add(element);
         }
         return shuffledList;
     }
 
-    private static <T> T takeOutRandomElement(List<T> list, Random gen) {
-        return list.remove(getRandomIndex(list.size(), gen));
+    private static <T> T takeOutRandomElement(List<T> list) {
+        return list.remove(getRandomIndex(list.size()));
     }
 
-    private static int getRandomIndex(int size, Random gen) {
+    private static int getRandomIndex(int size) {
         return Math.abs(gen.nextInt() % size);
     }
 
