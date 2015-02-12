@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import org.apache.commons.collections4.ListUtils;
 
 /**
  *
@@ -59,22 +60,11 @@ public class Deck {
         deck.addAll(cards);
     }
 
-    public Deck[] splitDeck(int amtOfDecks) {
-        Deck[] deckArray = new Deck[amtOfDecks];
-        int baseAmount = deck.size() / amtOfDecks;
-        int remainingCards = deck.size() % amtOfDecks;
-        int index = 0;
-        int lastIndex = 0;
-        for (int i = 0; i < amtOfDecks; i++) {
-            lastIndex = index;
-            index = i * baseAmount;
-            if(remainingCards > 0)
-                index++;
-            remainingCards--;
-            deckArray[i] = new Deck();
-            deckArray[i].addCards(deck.subList(lastIndex , index));          
-        }
-        return deckArray;
+    public List<Deck> splitDeck(int amtOfDecks) {
+        List<Deck> decks = new LinkedList<>();
+        for(List<Card> cards : ListUtils.<Card>partition(this.deck, amtOfDecks))
+            decks.add(new Deck(cards));
+        return decks;
     }
 
     public static Deck getFullDeck() {
