@@ -38,12 +38,12 @@ public class WarGameModel {
         if (isGameOver()) {
             return "Game Over";
         }
-        int winner;
         eachDraw(1);
-        do {
-            winner = getWinningIndex();
+        int winner = getWinningIndex();
+        while (winner == -1) {
             eachDraw(4);
-        } while (winner == -1);
+            winner = getWinningIndex();
+        }
         String moveString = moveToString(winner);
         giveWinnerCards(winner);
         checkInvariants();
@@ -113,8 +113,8 @@ public class WarGameModel {
             }
         }
     }
-    
-    public Deck[] getPlayers(){
+
+    public Deck[] getPlayers() {
         Deck[] deckArray = {new Deck(players[0]), new Deck(players[1])};
         return deckArray;
     }
