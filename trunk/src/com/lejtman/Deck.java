@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import org.apache.commons.collections4.ListUtils;
 
 public class Deck {
 
@@ -45,7 +44,7 @@ public class Deck {
     }
 
     public void putCardOnTop(Card card) {
-        deck.addLast(card);
+        deck.addFirst(card);
     }
 
     public void putCardInPositon(int position, Card card) {
@@ -61,22 +60,15 @@ public class Deck {
     }
     
     public List<Card> drawAll(){     
-        List<Card> cards = new ArrayList<>();
-        for(Card card : deck)
-           cards.add(deck.pop());
+        ArrayList<Card> cards = new ArrayList<>(deck);
+        deck.clear();
         return cards;
     }
 
-    public List<Deck> splitDeck(int amtOfDecks) {
-        List<Deck> splitDecks = new ArrayList<>();
-        int equalAmtInEach = deck.size() / amtOfDecks;
-        int decksWithExtraCard = deck.size() % amtOfDecks;
-        for(int i = 0; i < amtOfDecks; i += equalAmtInEach){
-            splitDecks.add(new Deck());
-            splitDecks.get(i).addCards(deck.subList(i, i));
-        }
+    public Deck subDeck(int start, int end) {
+        List<Card> subList = new ArrayList<>(deck.subList(start, end));
+        return new Deck(subList);
     }
-
     public static Deck getFullDeck() {
         return new Deck(fillDeck());
     }
