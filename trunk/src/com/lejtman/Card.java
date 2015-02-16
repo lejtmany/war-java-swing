@@ -33,4 +33,9 @@ public class Card implements Comparable<Card>{
         return this.suit.compareTo(that.suit);
     }
     
+    @Override
+    public String toString(){
+        return String.format("%s of %s", rank, suit);
+    }
+    
 }

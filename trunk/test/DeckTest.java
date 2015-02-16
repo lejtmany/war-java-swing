@@ -1,6 +1,7 @@
 // yosef shalom lejtman
-import com.lejtman.Deck;
+
 import java.util.Arrays;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -8,10 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- *
- * @author student1
- */
+
 public class DeckTest {
 
     public DeckTest() {
@@ -61,6 +59,13 @@ public class DeckTest {
     
     @Test 
     public void testShuffleList(){
+        
+    }
+    
+    @Test 
+    public void testSplitDeck(){
+        Deck deck = Deck.getFullDeck();
+        List<Deck> decks = deck.splitDeck(3);
         
     }
             

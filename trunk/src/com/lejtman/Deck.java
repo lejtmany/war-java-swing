@@ -39,6 +39,10 @@ public class Deck {
     public Card draw() {
         return deck.pop();
     }
+    
+    public Card peekFirst(){
+        return deck.peekFirst();
+    }
 
     public void putCardOnBottom(Card card) {
         deck.addFirst(card);
@@ -115,6 +119,10 @@ public class Deck {
         for (int i = 0; i < array.length; i++) {
             array[i] = list.remove(0);
         }
+    }
+
+    void clear() {
+        this.clear();
     }
 
 }
