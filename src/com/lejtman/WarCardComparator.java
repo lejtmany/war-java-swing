@@ -1,12 +1,9 @@
-
+//yosef shalom lejtman
 package com.lejtman;
 
 import java.util.Comparator;
 
-/**
- *
- * @author student1
- */
+
 public class WarCardComparator implements Comparator<Card>{
 
     @Override

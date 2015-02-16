@@ -16,8 +16,15 @@ public class WarGameModel {
         this.numOfPlayers = numOfPlayers;
         Deck deck = Deck.getFullDeck();
         this.players = deck.splitDeck(numOfPlayers);
-        pool = new ArrayList<>();
+        initializePool(numOfPlayers);
         mainLoop();
+    }
+
+    private void initializePool(int numOfPlayers) {
+        pool = new ArrayList<>();
+        for (int i = 0; i < numOfPlayers; i++) {
+            pool.add(new Deck());
+        }
     }
 
     private void mainLoop() {
@@ -37,13 +44,20 @@ public class WarGameModel {
         List<Integer> winningIndexes = findWinningIndex();
         if (winningIndexes.size() != 1) {
             war(winningIndexes);
-            move();
-            removeOutPlayers();
-            checkGameOver();
+            winningIndexes = findWinningIndex(winningIndexes);
         }
-        for(Deck deck : pool)
-            deck.clear();
+        giveWinnerCards(winningIndexes.get(0));
+        removeOutPlayers();
+        checkGameOver();
         return winningIndexes.get(0);
+    }
+
+    private void giveWinnerCards(int winningIndex) {
+        for (int i = 1; i < pool.size(); i++) {
+            pool.get(0).addCards(pool.get(i).drawAll());
+        }
+        pool.get(0).shuffle();
+        players.get(winningIndex).addCards(pool.get(0).drawAll());
     }
 
     private void printHeaders() {
@@ -65,49 +79,60 @@ public class WarGameModel {
 
     private String printCards() {
         StringBuffer sb = new StringBuffer();
-        for(int i = 1; i <= players.size(); i++)
+        for (int i = 1; i <= players.size(); i++) {
             sb.append(String.format("Player %d: %s", i, pool.get(i).peekFirst().toString()));
+        }
         return sb.toString();
     }
 
     private String printCounts() {
         StringBuffer sb = new StringBuffer();
-        for(int i = 1; i <= players.size(); i++)
+        for (int i = 1; i <= players.size(); i++) {
             sb.append(String.format("Player %d: %d", i, players.get(i).size()));
+        }
         return sb.toString();
     }
 
-    /**
-     * @return the numOfPlayers
-     */
     public int getNumOfPlayers() {
         return numOfPlayers;
     }
 
     private List<Integer> findWinningIndex() {
         List<Integer> indexes = new ArrayList<>();
-        Card maxCard = pool.get(0).peekFirst();
-        indexes.add(0);
-        for (int i = 1; i < pool.size(); i++) {
-            if (maxCard.compareTo(pool.get(i).peekFirst()) < 0) {
+        for(int i = 0; i < pool.size(); i++)
+        {
+            indexes.add(i++);
+        }
+        return findWinningIndex(indexes);
+    }
+
+    private  List<Integer> findWinningIndex(List<Integer> indexes) {
+        Card maxCard = pool.get(indexes.get(0)).peekFirst();
+        Card topCard;
+        WarCardComparator comp = new WarCardComparator();
+        int index;
+        for(int i = 1; i < indexes.size(); i++){
+            index = indexes.get(i);
+            topCard = pool.get(index).peekFirst();
+            if (comp.compare(maxCard, topCard) < 0) {
                 indexes.clear();
-                indexes.add(i);
-                maxCard = pool.get(i).peekFirst();
-            } else if (maxCard.compareTo(pool.get(i).peekFirst()) == 0) {
-                indexes.add(i);
-            }
+                indexes.add(index);
+                maxCard = topCard;
+            } else if (comp.compare(maxCard, topCard) == 0) {
+                indexes.add(index);
+            }      
         }
         return indexes;
     }
 
     private void war(List<Integer> winningIndexes) {
         for (Integer index : winningIndexes) {
-            tryDrawThreeCards(index);
+            tryDrawNCards(index, 4);
         }
     }
 
-    private void tryDrawThreeCards(Integer index) {
-        for (int i = 0; i < 3; i++) {
+    private void tryDrawNCards(Integer index, int amtOfCards) {
+        for (int i = 0; i < amtOfCards; i++) {
             tryDrawCard(index);
         }
     }
@@ -119,16 +144,18 @@ public class WarGameModel {
     }
 
     private void removeOutPlayers() {
-        for(int i = 0; i < players.size(); i++)
-            if(players.get(i).size() == 0){
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).size() == 0) {
                 players.remove(i);
                 pool.remove(i);
             }
+        }
     }
 
     private void checkGameOver() {
-        if(players.size() <= 1)
+        if (players.size() == 1) {
             gameOver = true;
+        }
     }
 
 }

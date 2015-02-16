@@ -11,10 +11,6 @@ import java.util.List;
 import java.util.Random;
 import org.apache.commons.collections4.ListUtils;
 
-/**
- *
- * @author student1
- */
 public class Deck {
 
     static Random gen;
@@ -63,12 +59,22 @@ public class Deck {
     public void addCards(Collection<Card> cards) {
         deck.addAll(cards);
     }
+    
+    public List<Card> drawAll(){     
+        List<Card> cards = new ArrayList<>();
+        for(Card card : deck)
+           cards.add(deck.pop());
+        return cards;
+    }
 
     public List<Deck> splitDeck(int amtOfDecks) {
-        List<Deck> decks = new LinkedList<>();
-        for(List<Card> cards : ListUtils.<Card>partition(this.deck, amtOfDecks))
-            decks.add(new Deck(cards));
-        return decks;
+        List<Deck> splitDecks = new ArrayList<>();
+        int equalAmtInEach = deck.size() / amtOfDecks;
+        int decksWithExtraCard = deck.size() % amtOfDecks;
+        for(int i = 0; i < amtOfDecks; i += equalAmtInEach){
+            splitDecks.add(new Deck());
+            splitDecks.get(i).addCards(deck.subList(i, i));
+        }
     }
 
     public static Deck getFullDeck() {
