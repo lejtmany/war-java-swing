@@ -62,11 +62,5 @@ public class DeckTest {
         
     }
     
-    @Test 
-    public void testSplitDeck(){
-        Deck deck = Deck.getFullDeck();
-        List<Deck> decks = deck.splitDeck(3);
-        
-    }
             
 }
