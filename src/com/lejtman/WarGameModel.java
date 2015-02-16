@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class WarGameModel {
 
     private final Deck[] players;
-    private final Deck[] pool;
+    private Deck[] pool;
     private boolean gameOver = false;
     private final WarCardComparator comparator;
 
@@ -28,18 +28,22 @@ public class WarGameModel {
         return deckArray;
     }
 
+    //this method is for testing purposes only 
+    // This method expects a Deck[] whose length is EXACTLY 2
+    void setPool(Deck[] pool) {
+        this.pool = pool;
+    }
 
     public String move() {
-        if(isGameOver())
+        if (isGameOver()) {
             return "Game Over";
-        for (int i = 0; i < players.length; i++) {
-            pool[i].putCardOnTop(players[i].draw());
         }
-        int winner = getWinningIndex();
-        while (winner == -1) {
-            war();
+        int winner;
+        eachDraw(1);
+        do {
             winner = getWinningIndex();
-        }
+            eachDraw(4);
+        } while (winner == -1);
         String moveString = moveToString(winner);
         giveWinnerCards(winner);
         checkInvariants();
@@ -47,7 +51,7 @@ public class WarGameModel {
         return moveString;
     }
 
-    public int getWinningIndex() {
+    int getWinningIndex() {
         int comp = comparator.compare(pool[0].peekFirst(), pool[1].peekFirst());
         if (comp < 0) {
             return 1;
@@ -58,15 +62,15 @@ public class WarGameModel {
         }
     }
 
-    private void giveWinnerCards(int winningIndex) {
+    void giveWinnerCards(int winningIndex) {
         List<Card> wholePool = new ArrayList<>(pool[(winningIndex == 0) ? 1 : 0].drawAll());
         pool[winningIndex].addCards(wholePool);
         pool[winningIndex].shuffle();
         players[winningIndex].addCards(pool[winningIndex].drawAll());
     }
-    
-      private String moveToString(int winner) {
-          return String.format("%s %20s %20s %20d %20d %20d", pool[0].peekFirst().toString(), pool[1].peekFirst().toString(), "Player " + (winner + 1), players[0].size(), players[1].size(), pool[0].size() + pool[1].size());
+
+    private String moveToString(int winner) {
+        return String.format("%s %20s %20s %20d %20d %20d", pool[0].peekFirst().toString(), pool[1].peekFirst().toString(), "Player " + (winner + 1), players[0].size(), players[1].size(), pool[0].size() + pool[1].size());
     }
 
     private String printCounts() {
@@ -77,49 +81,50 @@ public class WarGameModel {
         return sb.toString();
     }
 
-    private void war() {
+    void eachDraw(int amtOfCards) {
         for (int i = 0; i < pool.length; i++) {
-            tryDrawNCards(i, 4);
+            tryDrawNCards(i, amtOfCards);
         }
     }
 
-    private void tryDrawNCards(int index, int amtOfCards) {
+    void tryDrawNCards(int index, int amtOfCards) {
         for (int i = 0; i < amtOfCards; i++) {
             tryDrawCard(index);
         }
     }
 
-    private void tryDrawCard(Integer index) {
+    void tryDrawCard(Integer index) {
         if (players[index].size() != 0) {
             pool[index].putCardOnTop(players[index].draw());
         }
     }
 
-    private Deck[] splitDeck(Deck deck) {
+    Deck[] splitDeck(Deck deck) {
         Deck[] deckArray = new Deck[2];
         deckArray[0] = deck.subDeck(0, deck.size() / 2);
         deckArray[1] = deck.subDeck(deck.size() / 2, deck.size());
         return deckArray;
     }
 
-
-    private void checkGameOver() {
-        for(Deck deck : players)
-            if(deck.size() == 0)
+    void checkGameOver() {
+        for (Deck deck : players) {
+            if (deck.size() == 0) {
                 gameOver = true;
+            }
+        }
+    }
+    
+    public Deck[] getPlayers(){
+        Deck[] deckArray = {new Deck(players[0]), new Deck(players[1])};
+        return deckArray;
     }
 
     private void checkInvariants() {
-        assert(players[0].size() + players[1].size() == 52);
+        assert (players[0].size() + players[1].size() == 52);
     }
 
-    /**
-     * @return the gameOver
-     */
     public boolean isGameOver() {
         return gameOver;
     }
-
-  
 
 }

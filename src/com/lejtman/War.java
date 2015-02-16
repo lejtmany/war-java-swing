@@ -17,7 +17,6 @@ public class War {
             moveString = model.move();
             System.out.println(moveString);
         } while (!input.equalsIgnoreCase("q"));
-
     }
 
 }

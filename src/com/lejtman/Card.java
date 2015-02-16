@@ -7,7 +7,7 @@ public class Card implements Comparable<Card>{
 
     
 
-    enum Suit{Hearts,Spades,Diamonds,Clubs};
+    public enum Suit{Hearts,Spades,Diamonds,Clubs};
     
     private final Rank rank;
     private final Suit suit;

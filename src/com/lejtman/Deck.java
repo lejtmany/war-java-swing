@@ -26,6 +26,10 @@ public class Deck {
     public Deck(List<Card> cards) {
         deck = new LinkedList<>(cards);
     }
+    
+    public Deck(Deck deck){
+        this(deck.getCards());
+    }
 
     public void shuffle() {
         Collections.shuffle(deck);
@@ -47,12 +51,12 @@ public class Deck {
         deck.addFirst(card);
     }
 
-    public void putCardInPositon(int position, Card card) {
-        deck.add(position, card);
-    }
-
     public int size() {
         return deck.size();
+    }
+    
+    public boolean add(Card c){
+        return deck.add(c);
     }
 
     public void addCards(Collection<Card> cards) {
@@ -119,8 +123,12 @@ public class Deck {
         }
     }
 
-    void clear() {
+    public void clear() {
         this.clear();
+    }
+
+    private List<Card> getCards() {
+        return new ArrayList(deck);
     }
 
 }
