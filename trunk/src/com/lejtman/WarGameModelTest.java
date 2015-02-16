@@ -1,5 +1,6 @@
 package com.lejtman;
 
+import junit.framework.TestCase;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -8,7 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class WarGameModelTest {
+public class WarGameModelTest{
 
     public WarGameModelTest() {
     }
