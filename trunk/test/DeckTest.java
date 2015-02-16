@@ -1,5 +1,6 @@
 // yosef shalom lejtman
 
+import com.lejtman.Deck;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
@@ -56,11 +57,5 @@ public class DeckTest {
         }
         return sameCounter;
     }
-    
-    @Test 
-    public void testShuffleList(){
-        
-    }
-    
-            
+                   
 }
