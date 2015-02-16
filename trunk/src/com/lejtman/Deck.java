@@ -26,8 +26,8 @@ public class Deck {
     public Deck(List<Card> cards) {
         deck = new LinkedList<>(cards);
     }
-    
-    public Deck(Deck deck){
+
+    public Deck(Deck deck) {
         this(deck.getCards());
     }
 
@@ -38,8 +38,8 @@ public class Deck {
     public Card draw() {
         return deck.pop();
     }
-    
-    public Card peekFirst(){
+
+    public Card peekFirst() {
         return deck.peekFirst();
     }
 
@@ -54,16 +54,16 @@ public class Deck {
     public int size() {
         return deck.size();
     }
-    
-    public boolean add(Card c){
+
+    public boolean add(Card c) {
         return deck.add(c);
     }
 
     public void addCards(Collection<Card> cards) {
         deck.addAll(cards);
     }
-    
-    public List<Card> drawAll(){     
+
+    public List<Card> drawAll() {
         ArrayList<Card> cards = new ArrayList<>(deck);
         deck.clear();
         return cards;
@@ -73,6 +73,7 @@ public class Deck {
         List<Card> subList = new ArrayList<>(deck.subList(start, end));
         return new Deck(subList);
     }
+
     public static Deck getFullDeck() {
         return new Deck(fillDeck());
     }

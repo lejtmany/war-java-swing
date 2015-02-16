@@ -70,7 +70,7 @@ public class WarGameModel {
     }
 
     private String moveToString(int winner) {
-        return String.format("%s %20s %20s %20d %20d %20d", pool[0].peekFirst().toString(), pool[1].peekFirst().toString(), "Player " + (winner + 1), players[0].size(), players[1].size(), pool[0].size() + pool[1].size());
+        return String.format("%s %18s %18s %18d %18d %18d", pool[0].peekFirst().toString(), pool[1].peekFirst().toString(), "Player " + (winner + 1), players[0].size(), players[1].size(), pool[0].size() + pool[1].size());
     }
 
     private String printCounts() {
