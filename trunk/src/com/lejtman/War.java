@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class War {
 
     public static void main(String[] args) {
+        new CardFrame();
+        
         WarGameModel model = new WarGameModel();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Press enter to move. Enter q to quit.");
