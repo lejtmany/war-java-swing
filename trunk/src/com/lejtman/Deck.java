@@ -1,7 +1,6 @@
 //yosef shalom lejtman
 package com.lejtman;
 
-import com.lejtman.Card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -67,6 +66,10 @@ public class Deck {
         ArrayList<Card> cards = new ArrayList<>(deck);
         deck.clear();
         return cards;
+    }
+    
+    public List<Card> asList(){
+        return new ArrayList<>(deck);
     }
 
     public Deck subDeck(int start, int end) {
