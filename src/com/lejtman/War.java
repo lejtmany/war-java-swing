@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class War {
 
     public static void main(String[] args) {
-        new CardFrame();
+        new CardFrame(300,400);
         
         WarGameModel model = new WarGameModel();
         Scanner scanner = new Scanner(System.in);

@@ -6,9 +6,6 @@ package com.lejtman;
 public class Card implements Comparable<Card>{
 
     
-
-    public enum Suit{Hearts,Spades,Diamonds,Clubs};
-    
     private final Rank rank;
     private final Suit suit;
     
