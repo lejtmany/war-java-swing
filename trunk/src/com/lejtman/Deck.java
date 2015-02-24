@@ -118,7 +118,7 @@ public class Deck {
     }
 
     private static int getRandomIndex(int size) {
-        return Math.abs(gen.nextInt() % size);
+        return Math.abs(gen.nextInt(size));
     }
 
     private static <T> void copyListToArray(T[] array, List<T> list) {
